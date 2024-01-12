@@ -1,8 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card } from '../card/Card';
+import { fetchPosts} from '../../app/redditSlice';
+import { selectFilteredPosts } from '../../app/redditSlice';
+
 
 export function Post() {
+  const reddit = useSelector((state) => state.reddit);
+  const { isLoading, error, searchTerm, subreddit } = reddit;
+  const dispatch = useDispatch()
+  const posts = useSelector(selectFilteredPosts);
+
+  useEffect(() => {
+    dispatch(fetchPosts(subreddit?subreddit:'r/popular'));
+  }, [subreddit]);
+
   /*const fetchT = async () => {
     let returned = await fetch('https://www.reddit.com/r/popular.json')
     .then(response => response.json())
@@ -27,12 +39,9 @@ export function Post() {
     </li>
   )})
   console.log(postList)*/
-
-  return (
-    <div>
-      <ul>
-        
-      </ul>
-    </div>
-  );
+  if(posts.length){
+    return posts.map(post => {
+      return (<p>{post.title}</p>)
+    })
+  }
 }
