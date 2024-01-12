@@ -1,0 +1,20 @@
+form{
+  display: flex;
+  margin: 1vh;
+}
+form input {
+  border-right: none;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+form button {
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: none;
+}
+form button:hover{
+  cursor: pointer;
+  background-color: rgb(203, 203, 203);
+}
