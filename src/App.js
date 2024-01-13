@@ -13,8 +13,10 @@ function App() {
         <Search/>      
         <Filter/>
       </header>
+      <div>
+        <Post/>
+      </div>
 
-      <Post/>
     </div>
   );
 }

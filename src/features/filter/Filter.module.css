@@ -14,5 +14,11 @@ nav ul{
   padding: 0;
 }
 nav ul li{
-  min-width: 20vh;
+  margin: 10px;
+  height: 100%;
+}
+nav ul li img{
+  width: 2em;
+  height: 2em;
+  border-radius: 2em;
 }

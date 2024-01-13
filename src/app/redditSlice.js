@@ -4,16 +4,20 @@ import { getSubredditPosts, getSubreddits } from "./redditFetch";
 const initialState = {
     posts: [],
     searchTerm: '',
-    subreddit: 'r/popular'
+    subreddit: 'r/popular',
+    subreddits: []
 } 
 
 const redditSlice = createSlice({
     name: 'reddit',
     initialState,
     reducers: {
+
         setPosts(state, action) {
             state.posts = action.payload;
           },
+
+          
           startGetPosts(state) {
             state.isLoading = true;
             state.error = false;
@@ -26,18 +30,38 @@ const redditSlice = createSlice({
             state.isLoading = false;
             state.error = true;
           },
+
+
           setSearchTerm(state, action) {
             state.searchTerm = action.payload;
           },
+
+
           setSubreddit(state, action) {
             state.subreddit = action.payload;
             state.searchTerm = '';
           },
+
+
+          startGetSubreddits(state) {
+            state.isLoadingSubreddits = true;
+            state.error = false;
+          },
+          getSubredditsSuccess(state, action) {
+            state.isLoadingSubreddits = false;
+            state.subreddits = action.payload;
+          },
+          getSubredditsFailed(state) {
+            state.isLoadingSubreddits = false;
+            state.error = true;
+          },
+
+
     }
 })
 
 export const {
-    setPosts, startGetPosts, getPostsSuccess, getPostsFailed, setSearchTerm, setSubreddit, 
+    setPosts, startGetPosts, getPostsSuccess, getPostsFailed, setSearchTerm, setSubreddit, startGetSubreddits, getSubredditsFailed, getSubredditsSuccess
 } = redditSlice.actions
 
 export const fetchPosts = (subreddit) => async (dispatch) => {
@@ -57,22 +81,36 @@ export const fetchPosts = (subreddit) => async (dispatch) => {
     } catch (error) {
       dispatch(getPostsFailed());
     }
-  };
+};
+
+export const fetchSubreddits = () => async (dispatch) => {
+    try {
+        dispatch(startGetSubreddits());
+        const subreddits = await getSubreddits();
+        dispatch(getSubredditsSuccess(subreddits))
+    } catch(error){
+        dispatch(getSubredditsFailed())
+    }
+}
 
 const selectPosts = (state) => state.reddit.posts;
+
 const selectSearchTerm = (state) => state.reddit.searchTerm;
-  export const selectFilteredPosts = createSelector(
+
+export const selectFilteredPosts = createSelector(
     [selectPosts, selectSearchTerm],
     (posts, searchTerm) => {
+        
       if (searchTerm !== '') {
         return posts.filter((post) =>
           post.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
+      //This filters the current posts recived rather than finding posts that match the search Term
   
       return posts;
     }
-  );
+);
 
 const redditReducer = redditSlice.reducer
 export default redditReducer
