@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchSubreddits } from '../../app/redditSlice';
-import './Filter.module.css'
+import { fetchSubreddits, setSubreddit } from '../../app/redditSlice';
+import './Filter.module.css';
+import { Subreddit } from '../subreddit/Subreddit';
 
 
 export function Filter() {
@@ -17,20 +18,25 @@ export function Filter() {
   useEffect(() => {
     dispatch(fetchSubreddits());
   }, []);
+  
+  const handleClick = (name) => {
+    dispatch(setSubreddit(name))
+  }
 
   const subredditsData = subreddits.map((subreddit)=> {
-    console.log(subreddit)
     return {
       title: subreddit.display_name,
       image: subreddit.icon_img,
       id: subreddit.id,
-      name: subreddit.name
+      url: subreddit.url
     }
   })
   
-  const subredditsButtons = subredditsData.map((subreddit)=> {
-    console.log(subreddit.image)
-    return(<li><img src={subreddit.image} alt={subreddit.title}/></li>)
+  const subredditsButtons = subredditsData.map((card, i)=> {
+    if (card.url==subreddit) {
+      return(<Subreddit title={card.title} url={card.url} handleClick={handleClick} image={card.image} selected={true}/>)
+    }
+      return(<Subreddit title={card.title} url={card.url} handleClick={handleClick} image={card.image} selected={false}/>)
   })
 
   return (
