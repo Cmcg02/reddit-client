@@ -1,68 +1,107 @@
 import { createSlice, createSelector} from "@reduxjs/toolkit";
-import { getSubredditPosts, getSubreddits } from "./redditFetch";
+import { getPostComments, getSubredditPosts, getSubreddits } from "./redditFetch";
 
 const initialState = {
-    posts: [],
-    searchTerm: '',
-    subreddit: 'r/popular',
-    subreddits: []
+  posts: [],
+  searchTerm: '',
+  subreddit: 'r/popular',
+  subreddits: [],
+  isLoadingPosts: false,
+  isLoadingSubreddits: false,
+  errorPosts: false,
+  errorSubreddits: false,
 } 
 
 const redditSlice = createSlice({
-    name: 'reddit',
-    initialState,
-    reducers: {
-
-        setPosts(state, action) {
-            state.posts = action.payload;
-          },
-
-          
-          startGetPosts(state) {
-            state.isLoading = true;
-            state.error = false;
-          },
-          getPostsSuccess(state, action) {
-            state.isLoading = false;
-            state.posts = action.payload;
-          },
-          getPostsFailed(state) {
-            state.isLoading = false;
-            state.error = true;
-          },
-
-
-          setSearchTerm(state, action) {
-            state.searchTerm = action.payload;
-          },
+  name: 'reddit',
+  initialState,
+  reducers: {
+    startGetComments(state, action) {
+      state.posts[action.payload].showingComments = !state.posts[action.payload].viewComments
+      if(!state.posts[action.payload].showingComments){
+        return;
+      }
+      state.posts[action.payload].isLoadingComments = true;
+      state.posts[action.payload].errorComments = false;
+    },
+    getCommentsFailed(state, action) {
+      state.posts[action.payload].isLoadingComments = false;
+      state.posts[action.payload].errorComments = true;
+    },
+    getCommentsSuccess(state, action){
+      state.posts[action.payload.index].isLoadingComments = false;
+      state.posts[action.payload.index].errorComments = false;
+      state.posts[action.payload.index].comments = action.payload.comments;
+    },
 
 
-          setSubreddit(state, action) {
-            state.subreddit = action.payload;
-            state.searchTerm = '';
-          },
+    setPosts(state, action) {
+      state.posts = action.payload;
+    },
+    setSearchTerm(state, action) {
+      state.searchTerm = action.payload;
+    },
 
+    startGetPosts(state) {
+      state.isLoadingPosts = true;
+      state.errorPosts = false;
+    },
+    getPostsSuccess(state, action) {
+      state.isLoadingPosts = false;
+      state.posts = action.payload;
+    },
+    getPostsFailed(state, action) {
+      state.isLoadingPosts = false;
+      state.errorPosts = true;
+      state.errorState = action.payload.toString()   
+    },
 
-          startGetSubreddits(state) {
-            state.isLoadingSubreddits = true;
-            state.error = false;
-          },
-          getSubredditsSuccess(state, action) {
-            state.isLoadingSubreddits = false;
-            state.subreddits = action.payload;
-          },
-          getSubredditsFailed(state) {
-            state.isLoadingSubreddits = false;
-            state.error = true;
-          },
+    setSubreddit(state, action) {
+      state.subreddit = action.payload;
+      state.searchTerm = '';
+    },
 
-
-    }
+    startGetSubreddits(state) {
+      state.isLoadingSubreddits = true;
+      state.errorSubreddits = false;
+    },
+    getSubredditsSuccess(state, action) {
+      state.isLoadingSubreddits = false;
+      state.subreddits = action.payload;
+      state.errorSubreddits = false
+    },
+    getSubredditsFailed(state, action) {
+      state.isLoadingSubreddits = false;
+      state.errorSubreddits = true;
+    },
+  }
 })
 
 export const {
-    setPosts, startGetPosts, getPostsSuccess, getPostsFailed, setSearchTerm, setSubreddit, startGetSubreddits, getSubredditsFailed, getSubredditsSuccess
+  setPosts, 
+  startGetPosts, 
+  getPostsSuccess, 
+  getPostsFailed, 
+  setSearchTerm, 
+  setSubreddit, 
+  startGetSubreddits, 
+  getSubredditsFailed, 
+  getSubredditsSuccess,
+  getCommentsFailed,
+  getCommentsSuccess,
+  startGetComments
 } = redditSlice.actions
+
+export const fetchComments = (index, link) => async (dispatch) => {
+  try{
+    dispatch(startGetComments(index));
+    const comments = await getPostComments(link);
+    dispatch(getCommentsSuccess({index:index, comments: comments}))
+  }catch(error){
+    dispatch(getCommentsFailed(index))
+    console.log(error)
+  }
+}
 
 export const fetchPosts = (subreddit) => async (dispatch) => {
     try {
@@ -79,7 +118,8 @@ export const fetchPosts = (subreddit) => async (dispatch) => {
       }));
       dispatch(getPostsSuccess(postsWithMetadata));
     } catch (error) {
-      dispatch(getPostsFailed());
+
+      dispatch(getPostsFailed(error));
     }
 };
 

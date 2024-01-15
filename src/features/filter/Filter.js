@@ -12,7 +12,7 @@ export function Filter() {
   // }
 
   const reddit = useSelector((state) => state.reddit);
-  const { isLoadingSubreddits, error, subreddit, subreddits } = reddit;
+  const { isLoadingSubreddits, errorSubreddits, subreddit, subreddits } = reddit;
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -27,9 +27,15 @@ export function Filter() {
     return {
       title: subreddit.display_name,
       image: subreddit.icon_img,
-      id: subreddit.id,
+      // id: subreddit.id,
       url: subreddit.url
     }
+  })
+  subredditsData.unshift({
+    title: 'Recomended',
+    image: '',
+    url: 'r/popular',
+
   })
   
   const subredditsButtons = subredditsData.map((card, i)=> {
@@ -38,6 +44,22 @@ export function Filter() {
     }
       return(<Subreddit title={card.title} url={card.url} handleClick={handleClick} image={card.image} selected={false}/>)
   })
+
+  if(isLoadingSubreddits){
+    return (
+      <nav>
+        <h2>Loading...</h2>
+      </nav>
+    )
+  }
+
+  if(errorSubreddits){
+    return (
+      <nav>
+        <h2>Error loading subreddit</h2>
+      </nav>
+    )
+  }
 
   return (
     <nav>

@@ -34,6 +34,17 @@
   border-bottom: 1px solid black;
 }
 
+.subreddit{
+  border: 0;
+}
+.subreddit img{
+  border: 3px solid black;
+}
+
+#selected-subreddit img{
+  border: 3px solid gold;
+}
+
 main{
   position: fixed;
   bottom: 1em;
@@ -41,4 +52,48 @@ main{
   left: 1em;
   top: 30vh;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid black;
+}
+
+main .post{
+  width: 80%;
+  border: 1px solid black;
+  box-shadow: 0.3em 0.3em 0.3em black;
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post img{
+  max-width: 60%;
+  height: auto;
+  margin: 1em;
+}
+
+.post button{
+  padding: 1em;
+}
+
+.post button:hover{
+  cursor: pointer;
+}
+
+.post-comments{
+  list-style: none;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.post-comments li{
+  border-bottom: 1px dotted black;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
 }

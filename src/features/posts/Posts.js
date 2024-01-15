@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card } from '../card/Card';
 import { fetchPosts} from '../../app/redditSlice';
 import { selectFilteredPosts } from '../../app/redditSlice';
+import './Posts.module.css'
 
 
 export function Post() {
   const reddit = useSelector((state) => state.reddit);
-  const { isLoading, error, subreddit } = reddit;
+  const { isLoading, error, subreddit, errorState } = reddit;
   const dispatch = useDispatch()
   const posts = useSelector(selectFilteredPosts);
 
@@ -20,14 +21,15 @@ export function Post() {
   }
 
   if(error){
-    return (<h1>Error</h1>)
+    return errorState?(<h1>{errorState}</h1>):(<h1>Unknown error</h1>)
   }
 
   if(posts.length){
-    return posts.map(post => {
+    
+    return posts.map((post, i) => {
       //replace with card component
       //passed name, image, id...
-      return (<p>{post.title}</p>)
+      return (<Card index={i} title={post.title} url={post.url} type={post.post_hint} text={post.selftext} link={post.permalink}/>)
     })
   }
 }
