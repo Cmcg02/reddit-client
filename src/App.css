@@ -8,19 +8,20 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
+  .subreddit:hover{
+    animation: float infinite 3s ease-in-out;
   }
 }
-@keyframes App-logo-float {
+
+@keyframes float {
   0% {
-    transform: translateY(1vh);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(0px);
+    transform: translateY(1vh);
   }
   100% {
-    transform: translateY(1vh);
+    transform: translateY(0);
   }
 }
 
@@ -68,12 +69,18 @@ main .post{
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  padding: 1em;
+  box-sizing: border-box;
 }
 
 .post img{
   max-width: 60%;
   height: auto;
   margin: 1em;
+}
+
+.post p{
+  width: 60%;
 }
 
 .post button{
@@ -95,5 +102,17 @@ main .post{
 .post-comments li{
   border-bottom: 1px dotted black;
   padding-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-more-comments{
   margin-bottom: 1em;
+}
+
+.post-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

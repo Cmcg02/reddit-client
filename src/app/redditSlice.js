@@ -16,6 +16,10 @@ const redditSlice = createSlice({
   name: 'reddit',
   initialState,
   reducers: {
+    hideComments(state, action){
+      state.posts[action.payload].showingComments = false
+    },
+
     startGetComments(state, action) {
       state.posts[action.payload].showingComments = !state.posts[action.payload].viewComments
       if(!state.posts[action.payload].showingComments){
@@ -89,7 +93,8 @@ export const {
   getSubredditsSuccess,
   getCommentsFailed,
   getCommentsSuccess,
-  startGetComments
+  startGetComments,
+  hideComments
 } = redditSlice.actions
 
 export const fetchComments = (index, link) => async (dispatch) => {
@@ -97,6 +102,7 @@ export const fetchComments = (index, link) => async (dispatch) => {
     dispatch(startGetComments(index));
     const comments = await getPostComments(link);
     dispatch(getCommentsSuccess({index:index, comments: comments}))
+    console.log(comments)
   }catch(error){
     dispatch(getCommentsFailed(index))
     console.log(error)

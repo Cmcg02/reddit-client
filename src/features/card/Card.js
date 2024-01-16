@@ -1,61 +1,62 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styles from './Card.module.css';
-import { fetchComments } from '../../app/redditSlice';
+import { fetchComments, hideComments } from '../../app/redditSlice';
+import { Comments } from '../comments/Comments';
 
 export function Card(props) {
   const {title, url, type, text, index, link} = props;
   const reddit = useSelector(state=> state.reddit);
   const {posts} = reddit;
-  const comments = posts[index].comments
-  const [showingComments, setShowingComments] = useState(false)
-
+  const {comments, isLoadingComments, errorComments, isLoadingPosts, errorPosts, showingComments} = posts[index]
   const dispatch = useDispatch()
 
   const handleClick = async () => {
-    dispatch(fetchComments(index, link))
-    setShowingComments(!showingComments)
+    if(showingComments)
+    {
+      dispatch(hideComments(index))
+    }else{
+          dispatch(fetchComments(index, link))
+          console.log(comments)
+    }
   }
-  var commentsComponent =[]
-  commentsComponent = comments.map(comment => {
-    return (
-      <li><i>{comment.author}: </i>{comment.body}</li>
-    )
-  })
-  commentsComponent = commentsComponent.slice(0,8)
-
-  const image = (
-    <div className='post'>
-      <h3>{title}</h3>
-      <img src={url}/>
-      <button onClick={handleClick}>Comments</button>
-      <ul className='post-comments'>{showingComments?commentsComponent:null}</ul>
-    </div>
-  )
-  const video = (
-    <div className='post'>
-      <h3>{title}</h3>
-      <p>{text?text:null}</p>
-      <button onClick={handleClick}>Comments</button>
-      <ul className='post-comments'>{showingComments?commentsComponent:null}</ul>
-    </div>
-  )
-  const def = (
-    <div className='post'>
-      <h3>{title}</h3>
-      <p>{text}</p>
-      <button onClick={handleClick}>Comments</button>
-      <ul className='post-comments'>{showingComments?commentsComponent:null}</ul>
-    </div>
-  )
-
-
+  let content
   switch(type){
-    case 'image':
-      return image;
-    case 'hosted:video':
-      return null;
-    default:
-      return def
+    case 'image':{
+      content = (<>
+        <img src={url}/>
+        {text?<p>{text}</p>:null}
+      </>)
+    }
+    case 'hosted:video':{
+      content = (<>
+        <a href={link}>Link to Video</a>
+      </>)
+    }
+    default:{
+      content = (<>
+        <p className='post-body'></p>
+      </>)
+    }
   }
-}
+  const postBodys = document.getElementsByClassName('post-body')
+  //postBodys.map(body=>body.innerHTML=text)
+  //console.log(postBodys)
+  for(let item of postBodys){
+    item.innerHTML = text
+  }
+  let PostContentComponent = (
+    <section className='post-content'>
+      {content}
+    </section>
+  )
+  
+  let PostComponent = (
+    <div className='post'>
+      <h3>{title}</h3>
+      {PostContentComponent}
+      <button onClick={handleClick}>{showingComments?'Hide':'Comments'}</button>
+      {showingComments?<Comments comments={comments} isLoadingComments={isLoadingComments} errorComments={errorComments}/>:null}
+    </div>
+  )
+  return PostComponent
+  }

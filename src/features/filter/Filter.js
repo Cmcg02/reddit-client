@@ -6,10 +6,6 @@ import { Subreddit } from '../subreddit/Subreddit';
 
 
 export function Filter() {
-  // const exampleFiltersList = []
-  // for(var i=1; i<5; i++){
-  //   exampleFiltersList.push(<li><button>{`filter ${i}`}</button></li>)
-  // }
 
   const reddit = useSelector((state) => state.reddit);
   const { isLoadingSubreddits, errorSubreddits, subreddit, subreddits } = reddit;
@@ -27,7 +23,6 @@ export function Filter() {
     return {
       title: subreddit.display_name,
       image: subreddit.icon_img,
-      // id: subreddit.id,
       url: subreddit.url
     }
   })
