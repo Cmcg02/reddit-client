@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import moreIcon from './more-icon.png'
 
 export function Comments(props) {
   const {comments, errorComments, isLoadingComments} = props;
@@ -14,7 +14,9 @@ export function Comments(props) {
     console.log(amount)
   }
 
-  const commentComponents = comments.map(comment => {
+  const commentComponents = comments.filter(comment=>{
+    return comment.author !== 'AutoModerator'
+  }).map(comment => {
     return (
       <li><i>{comment.author}: </i><p>{comment.body}</p></li>
     )
@@ -25,7 +27,7 @@ export function Comments(props) {
     <ul className='post-comments'>
       {commentComponents}
     </ul>
-    <button onClick={handleClick} className='add-more-comments'>+</button>
+    <button onClick={handleClick} className='add-more-comments'><img src={moreIcon} className='more-icon'/></button>
     </>
   )
 

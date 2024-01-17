@@ -4,6 +4,7 @@ import { Search } from './features/search/Search';
 import { Post } from './features/posts/Posts';
 import { Filter } from './features/filter/Filter';
 import './App.css';
+import './App.mobile.css'
 
 function App() {
   return (

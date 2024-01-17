@@ -2,6 +2,9 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchComments, hideComments } from '../../app/redditSlice';
 import { Comments } from '../comments/Comments';
+import commentIcon from './comment-icon.png'
+import canelIcon from './Cross_icon.png'
+import linkIcon from './link-icon.png'
 
 export function Card(props) {
   const {title, url, type, text, index, link} = props;
@@ -24,32 +27,27 @@ export function Card(props) {
   if(type=='image'){
     content= (<div className='image-content'>
       <img src={url}/>
-      <p className='post-body'></p>
+      {text?<p className='post-body' id={`body${index}`}>{posts[index].selftext}</p>:null}
     </div>)
   } else if(type=='hosted:video'){
     content = (<div className='video-content'>
-      <a href={link}>Link to Video</a>
-      <p className='post-body'></p>
+      <p>Video unavailable, please follow the link to watch it on Reddit.</p>
+      {text?<p className='post-body' id={`body${index}`}>{posts[index].selftext}</p>:null}
     </div>)
   } else{
     content = (<div className='default-content'>
-      <p className='post-body'></p>
+      {text?<p className='post-body' id={`body${index}`}>{posts[index].selftext}</p>:null}
     </div>)
   }
 
-  const postBodys = document.getElementsByClassName('post-body')
-  //postBodys.map(body=>body.innerHTML=text)
-  //console.log(postBodys)
-  for(let item of postBodys){
-    if(text){item.innerHTML = text}
-  }
   
   let PostComponent = (
     <div className='post'>
       <h3>{title}</h3>
       {content}
       <span className='comments'>      
-        <button onClick={handleClick}>{showingComments?'Hide':'Comments'}</button>
+        <button onClick={handleClick}>{showingComments?(<img src={canelIcon} className='cancel-icon icon'/>):(<img src={commentIcon} className='comment-icon'/>)}</button>
+        <a href={posts[index].url} target='_blank'><button href={posts[index].url}><img src={linkIcon} className='link-icon icon'/></button></a>
         {showingComments?<Comments comments={comments} isLoadingComments={isLoadingComments} errorComments={errorComments}/>:null}
       </span>
     </div>

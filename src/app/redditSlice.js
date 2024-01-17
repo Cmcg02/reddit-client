@@ -49,6 +49,7 @@ const redditSlice = createSlice({
     startGetPosts(state) {
       state.isLoadingPosts = true;
       state.errorPosts = false;
+      state.posts= []
     },
     getPostsSuccess(state, action) {
       state.isLoadingPosts = false;

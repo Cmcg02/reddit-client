@@ -34,7 +34,7 @@ export function Filter() {
   
   const subredditsButtons = subredditsData.map((card, i)=> {
     if (card.url==subreddit) {
-      return(<Subreddit title={card.title} url={card.url} handleClick={handleClick} image={card.image} selected={true}/>)
+      return(<Subreddit title={card.title} url={card.url} handleClick={handleClick} image={card.image} selected={true} />)
     }
       return(<Subreddit title={card.title} url={card.url} handleClick={handleClick} image={card.image} selected={false}/>)
   })
@@ -42,7 +42,7 @@ export function Filter() {
   if(isLoadingSubreddits){
     return (
       <nav>
-        <h2>Loading...</h2>
+        <h6>...</h6>
       </nav>
     )
   }
@@ -50,7 +50,7 @@ export function Filter() {
   if(errorSubreddits){
     return (
       <nav>
-        <h2>Error loading subreddit</h2>
+        <h6>Error</h6>
       </nav>
     )
   }

@@ -7,7 +7,7 @@ import { selectFilteredPosts } from '../../app/redditSlice';
 
 export function Post() {
   const reddit = useSelector((state) => state.reddit);
-  const { isLoading, error, subreddit, errorState } = reddit;
+  const { isLoadingPosts, errorPosts, subreddit, errorState } = reddit;
   const dispatch = useDispatch()
   const posts = useSelector(selectFilteredPosts);
 
@@ -15,11 +15,11 @@ export function Post() {
     dispatch(fetchPosts(subreddit));
   }, [subreddit]);  
 
-  if(isLoading){
-    return (<h1>Loading</h1>)
+  if(isLoadingPosts){
+    return (<h1>...</h1>)
   }
 
-  if(error){
+  if(errorPosts){
     return errorState?(<h1>{errorState}</h1>):(<h1>Unknown error</h1>)
   }
 
