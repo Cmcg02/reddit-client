@@ -20,42 +20,38 @@ export function Card(props) {
     }
   }
   let content
-  switch(type){
-    case 'image':{
-      content = (<>
-        <img src={url}/>
-        {text?<p>{text}</p>:null}
-      </>)
-    }
-    case 'hosted:video':{
-      content = (<>
-        <a href={link}>Link to Video</a>
-      </>)
-    }
-    default:{
-      content = (<>
-        <p className='post-body'></p>
-      </>)
-    }
+
+  if(type=='image'){
+    content= (<div className='image-content'>
+      <img src={url}/>
+      <p className='post-body'></p>
+    </div>)
+  } else if(type=='hosted:video'){
+    content = (<div className='video-content'>
+      <a href={link}>Link to Video</a>
+      <p className='post-body'></p>
+    </div>)
+  } else{
+    content = (<div className='default-content'>
+      <p className='post-body'></p>
+    </div>)
   }
+
   const postBodys = document.getElementsByClassName('post-body')
   //postBodys.map(body=>body.innerHTML=text)
   //console.log(postBodys)
   for(let item of postBodys){
-    item.innerHTML = text
+    if(text){item.innerHTML = text}
   }
-  let PostContentComponent = (
-    <section className='post-content'>
-      {content}
-    </section>
-  )
   
   let PostComponent = (
     <div className='post'>
       <h3>{title}</h3>
-      {PostContentComponent}
-      <button onClick={handleClick}>{showingComments?'Hide':'Comments'}</button>
-      {showingComments?<Comments comments={comments} isLoadingComments={isLoadingComments} errorComments={errorComments}/>:null}
+      {content}
+      <span className='comments'>      
+        <button onClick={handleClick}>{showingComments?'Hide':'Comments'}</button>
+        {showingComments?<Comments comments={comments} isLoadingComments={isLoadingComments} errorComments={errorComments}/>:null}
+      </span>
     </div>
   )
   return PostComponent

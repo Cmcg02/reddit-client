@@ -28,7 +28,15 @@ export function Post() {
     return posts.map((post, i) => {
       //replace with card component
       //passed name, image, id...
-      return (<Card index={i} title={post.title} url={post.url} type={post.post_hint} text={post.selftext} link={post.permalink}/>)
+      return (<>
+        <Card 
+          index={i} 
+          title={post.title} 
+          url={post.url} 
+          type={post.post_hint} 
+          text={post.selftext} 
+          link={post.permalink}
+        /></>)
     })
   }
 }

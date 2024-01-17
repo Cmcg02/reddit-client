@@ -13,8 +13,9 @@ function App() {
         <Search/>      
         <Filter/>
       </header>
-      <main>
-        <Post/>
+
+      <main>      
+        <Post/>        
       </main>
 
     </div>

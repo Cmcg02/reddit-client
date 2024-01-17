@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 import logo from '../../Reddit-Emblema-650x366.png';
 
 export function Subreddit(props) {
