@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card } from '../card/Card';
 import { fetchPosts} from '../../app/redditSlice';
 import { selectFilteredPosts } from '../../app/redditSlice';
-import './Posts.module.css'
 
 
 export function Post() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './Reddit-Emblema-650x366.png';
 import { Search } from './features/search/Search';
 import { Post } from './features/posts/Posts';
 import { Filter } from './features/filter/Filter';

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import './Search.module.css';
 import {setSearchTerm} from '../../app/redditSlice'
 
 export function Search() {

@@ -7,6 +7,27 @@
   pointer-events: none;
 }
 
+form{
+  display: flex;
+  margin: 1vh;
+}
+form input {
+  border-right: none;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+form button {
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: none;
+}
+form button:hover{
+  cursor: pointer;
+  background-color: rgb(203, 203, 203);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .subreddit:hover{
     animation: float infinite 3s ease-in-out;
@@ -35,11 +56,49 @@
   border-bottom: 1px solid black;
 }
 
+nav {
+  width: 100%;
+  height: 4em;
+  margin-bottom: 1em;
+}
+nav ul{
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  overflow-x: scroll;
+  margin: 0;
+  padding: 0;
+}
+
+
 .subreddit{
   border: 0;
+  margin: 10px;
+  height: 80%;
+  min-width: 6em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+.subreddit:hover{
+  cursor: pointer;
+}
+
 .subreddit img{
   border: 3px solid black;
+  width: auto;
+  height: 2em;
+  border-radius: 2em;
+  overflow: hidden;
+}
+
+.subreddit h6{
+  margin: 0;
 }
 
 #selected-subreddit img{

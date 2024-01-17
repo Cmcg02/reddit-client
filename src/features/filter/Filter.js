@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchSubreddits, setSubreddit } from '../../app/redditSlice';
-import './Filter.module.css';
 import { Subreddit } from '../subreddit/Subreddit';
 
 
