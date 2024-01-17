@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.41f65575.css",
+    "main.js": "/static/js/main.dcbe87d8.js",
+    "static/js/787.018353c7.chunk.js": "/static/js/787.018353c7.chunk.js",
+    "static/media/Reddit-Emblema-650x366.png": "/static/media/Reddit-Emblema-650x366.cd53a50b9d7539b65ba7.png",
+    "static/media/link-icon.png": "/static/media/link-icon.b393f6b14af33df6a4da.png",
+    "static/media/Cross_icon.png": "/static/media/Cross_icon.63a8d029821d078687f1.png",
+    "index.html": "/index.html",
+    "main.41f65575.css.map": "/static/css/main.41f65575.css.map",
+    "main.dcbe87d8.js.map": "/static/js/main.dcbe87d8.js.map",
+    "787.018353c7.chunk.js.map": "/static/js/787.018353c7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.41f65575.css",
+    "static/js/main.dcbe87d8.js"
+  ]
+}
