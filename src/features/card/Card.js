@@ -46,8 +46,8 @@ export function Card(props) {
       <h3>{title}</h3>
       {content}
       <span className='comments'>      
-        <button onClick={handleClick}>{showingComments?(<img src={canelIcon} className='cancel-icon icon'/>):(<img src={commentIcon} className='comment-icon'/>)}</button>
-        <a href={posts[index].url} target='_blank'><button href={posts[index].url}><img src={linkIcon} className='link-icon icon'/></button></a>
+        <button onClick={handleClick} aria-label='toggel comments'>{showingComments?(<img src={canelIcon} className='cancel-icon icon'/>):(<img src={commentIcon} className='comment-icon'/>)}</button>
+        <a href={posts[index].url} target='_blank'><button href={posts[index].url} aria-label='link to reddit page'><img src={linkIcon} className='link-icon icon'/></button></a>
         {showingComments?<Comments comments={comments} isLoadingComments={isLoadingComments} errorComments={errorComments}/>:null}
       </span>
     </div>

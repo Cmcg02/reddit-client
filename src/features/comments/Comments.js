@@ -27,7 +27,7 @@ export function Comments(props) {
     <ul className='post-comments'>
       {commentComponents}
     </ul>
-    <button onClick={handleClick} className='add-more-comments'><img src={moreIcon} className='more-icon'/></button>
+    <button onClick={handleClick} className='add-more-comments' aria-label='load more comments'><img src={moreIcon} className='more-icon'/></button>
     </>
   )
 
